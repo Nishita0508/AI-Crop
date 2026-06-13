@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plant Disease Detection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Smart Crop Care</p>
+      <h1>Plant Disease Detection</h1>
+      <p class="lead">Upload a leaf image to identify plant stress, detect disease risk, and get practical treatment guidance in seconds.</p>
+      <div class="badge-row">
+        <span>TensorFlow model</span>
+        <span>224 × 224 preprocessing</span>
+        <span>Flask + responsive UI</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="mini-stat">
+        <strong>29</strong>
+        <span>Crop classes</span>
+      </div>
+      <div class="mini-stat">
+        <strong>Fast</strong>
+        <span>Instant prediction</span>
+      </div>
+      <div class="mini-stat">
+        <strong>AI</strong>
+        <span>Remedy guidance</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel uploader-panel">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">Upload</p>
+          <h2>Detect plant disease</h2>
+        </div>
+        <span class="pill">Drag & drop supported</span>
+      </div>
+
+      <form id="uploadForm" class="upload-card" enctype="multipart/form-data">
+        <input id="fileInput" type="file" name="image" accept="image/*" hidden />
+        <div id="dropZone" class="drop-zone">
+          <div class="drop-icon">🌱</div>
+          <h3>Drop your leaf image here</h3>
+          <p>Or click to browse your files</p>
+          <button type="button" id="browseBtn" class="primary-btn">Choose Image</button>
+        </div>
+        <div id="previewBox" class="preview-box hidden">
+          <img id="previewImage" alt="Uploaded preview" />
+          <p id="previewName" class="preview-name"></p>
+        </div>
+      </form>
+
+      <button id="predictBtn" class="primary-btn full">Run Prediction</button>
+      <p id="statusText" class="status-text">Ready to analyze your crop leaf image.</p>
+    </section>
+
+    <section class="panel result-panel">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">Results</p>
+          <h2>Prediction summary</h2>
+        </div>
+      </div>
+      <div id="resultCard" class="result-card empty-state">
+        <h3>No image analyzed yet</h3>
+        <p>Upload a leaf image to view the disease name, confidence score, and recommended care tips.</p>
+      </div>
+
+      <div id="detailsGrid" class="details-grid hidden">
+        <article class="info-card">
+          <h3>Disease</h3>
+          <p id="diseaseName" class="metric"></p>
+        </article>
+        <article class="info-card">
+          <h3>Confidence</h3>
+          <p id="confidenceValue" class="metric"></p>
+        </article>
+        <article class="info-card">
+          <h3>Status</h3>
+          <p id="statusValue" class="metric"></p>
+        </article>
+        <article class="info-card">
+          <h3>Recommended action</h3>
+          <p id="actionValue" class="tip"></p>
+        </article>
+        <article class="info-card wide">
+          <h3>Prevention tip</h3>
+          <p id="preventionValue" class="tip"></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
