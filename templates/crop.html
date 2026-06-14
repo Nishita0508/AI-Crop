@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Crop Recommendation - AgriAI{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Crop Recommendation</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('crop.predict_crop_route') }}">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Nitrogen (N)</label>
+                            <input type="number" step="any" name="N" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Phosphorus (P)</label>
+                            <input type="number" step="any" name="P" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Potassium (K)</label>
+                            <input type="number" step="any" name="K" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Temperature (°C)</label>
+                            <input type="number" step="any" name="temperature" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Humidity (%)</label>
+                            <input type="number" step="any" name="humidity" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">pH</label>
+                            <input type="number" step="any" name="ph" class="form-control" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Rainfall (mm)</label>
+                            <input type="number" step="any" name="rainfall" class="form-control" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Get Recommendation</button>
+                </form>
+
+                {% if result %}
+                <div class="alert alert-success mt-4 text-center">
+                    <h5>Recommended Crop:</h5>
+                    <h2 class="fw-bold">{{ result.recommended_crop }}</h2>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

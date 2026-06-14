@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Disease Detection - AgriAI{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">Plant Disease Detection</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('disease.predict_disease_route') }}" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Upload Leaf Image</label>
+                        <input type="file" name="leaf_image" class="form-control" accept=".png,.jpg,.jpeg" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Detect Disease</button>
+                </form>
+
+                {% if result %}
+                <div class="mt-4">
+                    <div class="text-center">
+                        <img src="{{ url_for('uploaded_file', filename=result.image_filename) }}" class="preview-img" alt="Uploaded leaf">
+                    </div>
+                    <div class="alert alert-success mt-3">
+                        <h5>Disease: <strong>{{ result.disease_name }}</strong></h5>
+                        <p>Confidence: <strong>{{ result.confidence }}%</strong></p>
+                        <hr>
+                        <p><strong>Cause:</strong> {{ result.cause }}</p>
+                        <p><strong>Recommended Solution:</strong> {{ result.solution }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

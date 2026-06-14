@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - AgriAI{% endblock %}
+{% block content %}
+<h3 class="mb-4">Welcome, {{ user.username }} 👋</h3>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="stat-box">
+            <h2>{{ total_predictions }}</h2>
+            <p class="mb-0">Total Predictions</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-box">
+            <h2>{{ total_crop_count }}</h2>
+            <p class="mb-0">Crop Recommendations</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="stat-box">
+            <h2>{{ total_disease_count }}</h2>
+            <p class="mb-0">Disease Detections</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">Recent Crop Recommendations</div>
+            <div class="card-body">
+                {% if recent_crops %}
+                <table class="table table-sm">
+                    <thead><tr><th>Date</th><th>Recommended Crop</th></tr></thead>
+                    <tbody>
+                    {% for item in recent_crops %}
+                        <tr>
+                            <td>{{ item.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td><span class="badge bg-success">{{ item.recommended_crop }}</span></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="text-muted">No crop recommendations yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">Recent Disease Detections</div>
+            <div class="card-body">
+                {% if recent_diseases %}
+                <table class="table table-sm">
+                    <thead><tr><th>Date</th><th>Disease</th><th>Confidence</th></tr></thead>
+                    <tbody>
+                    {% for item in recent_diseases %}
+                        <tr>
+                            <td>{{ item.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td>{{ item.disease_name }}</td>
+                            <td>{{ item.confidence }}%</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="text-muted">No disease detections yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

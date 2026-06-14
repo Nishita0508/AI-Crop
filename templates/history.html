@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}History - AgriAI{% endblock %}
+{% block content %}
+<h3 class="mb-4">Prediction History</h3>
+
+<div class="card mb-4">
+    <div class="card-header bg-success text-white">Crop Recommendation History</div>
+    <div class="card-body">
+        {% if all_crops %}
+        <table class="table table-striped">
+            <thead><tr><th>Date</th><th>N</th><th>P</th><th>K</th><th>Temp</th><th>Humidity</th><th>pH</th><th>Rainfall</th><th>Recommended Crop</th></tr></thead>
+            <tbody>
+            {% for item in all_crops %}
+                <tr>
+                    <td>{{ item.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ item.inputs.N }}</td>
+                    <td>{{ item.inputs.P }}</td>
+                    <td>{{ item.inputs.K }}</td>
+                    <td>{{ item.inputs.temperature }}</td>
+                    <td>{{ item.inputs.humidity }}</td>
+                    <td>{{ item.inputs.ph }}</td>
+                    <td>{{ item.inputs.rainfall }}</td>
+                    <td><span class="badge bg-success">{{ item.recommended_crop }}</span></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">No crop recommendation history found.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-success text-white">Disease Detection History</div>
+    <div class="card-body">
+        {% if all_diseases %}
+        <table class="table table-striped">
+            <thead><tr><th>Date</th><th>Image</th><th>Disease</th><th>Confidence</th><th>Solution</th></tr></thead>
+            <tbody>
+            {% for item in all_diseases %}
+                <tr>
+                    <td>{{ item.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td><img src="{{ url_for('uploaded_file', filename=item.image_filename) }}" width="60" height="60" style="object-fit:cover;border-radius:6px;"></td>
+                    <td>{{ item.disease_name }}</td>
+                    <td>{{ item.confidence }}%</td>
+                    <td>{{ item.solution }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">No disease detection history found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
